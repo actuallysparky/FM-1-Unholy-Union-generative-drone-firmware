@@ -1,0 +1,43 @@
+name: Bug report
+description: Something in UnholyUnion doesn't work as it should (one bug per issue)
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please include reproducible steps and the UnholyUnion firmware version.
+  - type: input
+    id: version
+    attributes:
+      label: UnholyUnion version
+      description: Hold HOME > ABOUT on the FM-1
+      placeholder: "0.2.3"
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Computer, OS and browser (if the editor, installer or USB is involved)
+      placeholder: "macOS 15.6, Chrome 140"
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: A photo or short video helps.
+    validations:
+      required: true

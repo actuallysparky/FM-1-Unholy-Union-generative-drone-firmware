@@ -1,0 +1,11 @@
+build/
+.DS_Store
+__pycache__/
+*.fwsc
+.venv/
+.playwright-cli/
+output/
+web/UnholyUnion-*.pdf
+web/UnholyUnion-source-sdk-*.tar.gz
+web/LICENSE
+*.wav

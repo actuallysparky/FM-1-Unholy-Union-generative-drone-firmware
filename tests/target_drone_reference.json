@@ -1,0 +1,30 @@
+{
+  "source_commit": "b561d072fb6c19269ee8369f986a95b526c51033",
+  "compiler_release": "20260730.1",
+  "validation_artifact_sha256": "853ed182e73899d37edfe531a737e26e6a3aa8e83bd4a4e1e60594a3abcc8eee",
+  "status": "provisional static regression reference, not hardware timing approval",
+  "folded": {
+    "drone_walk": "drone_tick"
+  },
+  "functions": {
+    "drone_tick": {
+      "insns": 381,
+      "cost": 228
+    },
+    "drone_restore": {
+      "insns": 22,
+      "cost": 5
+    },
+    "drone_voice": {
+      "insns": 46,
+      "cost": 0
+    }
+  },
+  "limits": "unchanged +10% comparison; both total instructions and loop cost; inherited budgets unchanged",
+  "cadence": {
+    "drone_tick": "per track/block; walk at its control cadence",
+    "drone_restore": "per active track/block",
+    "drone_voice": "per active voice/block; straight-line body is nonzero even when loop cost is zero"
+  },
+  "limitations": "Calls are counted but not recursively costed. Static backward-branch weights are not cycles; inlining and unrolling can change this proxy independently of runtime. Verify emitted target code and hardware worst-case timing before release."
+}

@@ -1,0 +1,31 @@
+{
+  "project": "UnholyUnion",
+  "experimental": true,
+  "base": {
+    "repo": "https://github.com/hugelton/Felucca",
+    "version": "v1.5.1",
+    "commit": "a4d7ca2e5d52a4c35e2468401f00d883cadbda03"
+  },
+  "port": {
+    "repo": "https://github.com/zednaked/jangada",
+    "version": "v0.9.4",
+    "commit": "84b0b56f95de1b7af8a1043666ff1b066e50d4db",
+    "files": [
+      "firmware/src/drone.c"
+    ],
+    "license": "GPL-3.0-only"
+  },
+  "legacy_fixture": {
+    "path": "tests/fixtures/felucca-fun10.bin",
+    "sha256": "fcb07001135d50fbef3de29aae1b426d97e0a3a29721fbec715a9079728df665",
+    "generator": "tools/make_legacy_fixture.c",
+    "writer": "unaltered Felucca v1.5.1 project.c/hostsim.c; native fixture only"
+  },
+  "flash_allocation_invariants": {
+    "firmware/app.ld": "46c248b09533d81e645237710ac86ceb132a0e2e9bd3c607026aef5c2be5efe9",
+    "firmware/loader/loader.ld": "4acae8c9a16cf9a70f53a546f9175b5a86d2bc5cb6bce39513a2ff3c4fdba4ae",
+    "firmware/src/storage.c": "678785d07ca3bb90ec5adf41e8be4a483d9feb0bbf6266353e3ed4e24e131b17",
+    "firmware/src/storage_hw.c": "afbd29b540e3c6f85cacdfaa3449258a936f467f5c3d12cb1f9c489d31958eff",
+    "firmware/hal/fm1_flash.h": "b5d63acad1951bab0236991e56762c95c6eaf0ad94d1ea058cb9f0281059b693"
+  }
+}
