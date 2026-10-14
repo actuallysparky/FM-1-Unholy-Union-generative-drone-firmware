@@ -4,7 +4,7 @@
 
 UnholyUnion is my generative drone firmware for the M-VAVE FM-1. **Immaculate Permutation** rolls an ambient arrangement in a shared key, with a pad, sequence and chord arpeggio beneath a fourth voice for your hands. Keep a sermon you like, evolve it while playing, or reveal another.
 
-[Enter the Ritual Room — installer and guides](https://citadeloftruth.duckdns.org/local/unholyunion/) · [Download compiled firmware — 0.2.3 experimental](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/download/v0.2.3/unholyunion-permutation-0.2.3.fwsc) · [Release and guides](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/tag/v0.2.3)
+[Enter the Ritual Room — installer and guides](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) · [Download compiled firmware — 0.2.3 experimental](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/download/v0.2.3/unholyunion-permutation-0.2.3.fwsc) · [Release and guides](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/tag/v0.2.3)
 
 ## What it does
 
@@ -20,7 +20,7 @@ On ordinary performance pages, OCT+/OCT- transpose the selected track's keyboard
 
 ## Receive the offering
 
-Open the [Ritual Room](https://citadeloftruth.duckdns.org/local/unholyunion/) in desktop Chrome or Edge, connect one FM-1 and choose **The Apocrypha**. Gather your scriptures, acknowledge the update risks, then install. The page uses USB MIDI/SysEx over HTTPS.
+Open the [Ritual Room](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) in desktop Chrome or Edge, connect one FM-1 and choose **The Apocrypha**. Gather your scriptures, acknowledge the update risks, then install. The page uses USB MIDI/SysEx over HTTPS.
 
 **Cleanse all user data** starts unchecked. Leave it unchecked to preserve saved projects, presets, samples and settings. Checking it permanently erases them and restores a fresh beginning. The instrument's ordinary Return to Evening Vow reset preserves saved projects and presets.
 
