@@ -58,7 +58,8 @@ def stage(destination, docs):
         if hashlib.sha256(data).hexdigest() != digest:
             raise ValueError(f'Pinned artifact differs: {name}')
         inputs[name] = data
-    for name in ('UnholyUnion-User-Manual-0.2.3.pdf', 'UnholyUnion-Manual-0.2.3-source.zip',
+    for name in ('UnholyUnion-Quick-Start-0.2.3.pdf', 'UnholyUnion-Quick-Start-0.2.3-source.zip',
+                 'UnholyUnion-User-Manual-0.2.3.pdf', 'UnholyUnion-Manual-0.2.3-source.zip',
                  'UnholyUnion-User-Manual-0.2.2.pdf', 'UnholyUnion-Manual-0.2.2-source.zip',
                  'UnholyUnion-User-Manual-0.2.1.pdf', 'UnholyUnion-Manual-0.2.1-source.zip',
                  'UnholyUnion-User-Manual-0.2.0.pdf', 'UnholyUnion-Manual-0.2.0-source.zip',
