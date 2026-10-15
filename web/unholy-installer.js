@@ -8,22 +8,23 @@ const demo=new URLSearchParams(location.search).get('demo')==='1';
 const experimental=!offering.release.targetValidated;
 let release=demo?{...offering.release,available:true,targetValidated:true,sha256:'SIMULATION',bytes:1}:offering.release;
 let state=new InstallerState(release,{simulation:demo,experimental:!demo&&experimental});
-let updater=null,access=null,payload=null,bundled=null,loading=false,loadGeneration=0,backingUp=false;
+let updater=null,access=null,payload=null,bundled=null,loading=false,loadGeneration=0,backingUp=false,connecting=false;
 const matchingInputs=access=>[...access.inputs.values()].filter(p=>p.state!=='disconnected'&&/fm-1|blessed|felucca|unholy|ota|composite|sinco|usb-midi/i.test(p.name||''));
 const label={idle:'Awaiting instrument',connected:'Instrument identified',incompatible:'Incompatible device',validated:'Package checked',starting:'Entering update mode',verify:'Loader preparation',loader:'Waiting for update loader',write:'Writing firmware',wipe:'Cleansing user data',reboot:'Waiting for identity',done:demo?'SIMULATED completion':'Identity verified',error:'Update error',disconnected:'Connection lost',cancelled:'Session cancelled'};
 function log(s){const box=$('log');box.textContent=`${new Date().toLocaleTimeString()}  ${s}\n`+box.textContent;box.scrollTop=0;}
 function render(){
  $('phase').textContent=label[state.phase]||state.phase;
  $('device').textContent=state.device?`${demo?'SIMULATED ':''}${state.device.text}`:'No device connected.';
- $('install').disabled=backingUp||!state.ready;$('install').textContent=demo?'Simulate install':'Install Apocryphal';
- $('connect').disabled=state.busy||backingUp;$('cancel').disabled=state.busy||backingUp;$('cancel').hidden=!state.device;
- $('download-backup').disabled=demo||state.busy||backingUp||!state.device||!access;
+ $('install').disabled=connecting||backingUp||!state.ready;$('install').textContent=demo?'Simulate install':'Install Apocryphal';
+ $('connect').disabled=connecting||state.busy||backingUp;$('connect').hidden=!!state.device;$('cancel').disabled=state.busy||backingUp;$('cancel').hidden=!state.device;
+ $('download-backup').disabled=demo||connecting||state.busy||backingUp||!state.device||!access;
  $('retry-package').disabled=state.busy||loading;
  $('progress').hidden=!state.busy;
  $('status').textContent=state.error|| (state.phase==='done'?(demo?'Simulation completed. No device was contacted.':`Device returned and reports ${release.product}. Press PLAY to pray.`):state.busy?'Transfer active. Keep USB and power stable. Transfer counts include rereads; the total is the package size, not a percentage of flash written.':demo?'Simulation room: all events below are mocks.':'No update has been initiated.');
  if(!demo&&!state.busy&&state.device&&!state.compatible)$('status').textContent='This offering does not support the instrument’s current identity. Keep your FM-1 connected and check the recovery notes.';
 }
 $('connect').addEventListener('click',async()=>{
+ if(connecting||backingUp||state.busy)return;connecting=true;render();
  try {
  state.wipeUserData=false;
  if(demo){state.connect({model:'FM-1',text:'FM-1_SIMULATED'});state.load({product:release.product,sha256:'SIMULATION',bytes:1});log('SIMULATED device and package. No MIDI access.');render();return;}
@@ -34,7 +35,7 @@ $('connect').addEventListener('click',async()=>{
  updater=new Updater(access,log);const found=await updater.find();if(!found)throw Error('No supported FM-1 identity answered. Check USB, MIDI permissions, and other apps.');
  found.link.close();state.connect(found.id);payload=null;authorizeBundled();log(`Read-only identity: ${found.id.text}`);
  access.onstatechange=ev=>{if(ev.port.state==='disconnected'&&!state.busy){state.disconnected();payload=null;render();}};
- }catch(e){state.fail(e);log(e.message);}finally{render();}
+ }catch(e){state.fail(e);log(e.message);}finally{connecting=false;render();}
 });
 
 $('download-backup').addEventListener('click',async()=>{

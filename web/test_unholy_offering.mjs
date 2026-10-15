@@ -33,7 +33,8 @@ Object.defineProperty(globalThis,'navigator',{configurable:true,value:{async req
 const bytes=await readFile(new URL(offering.package.filename,import.meta.url));
 let resolveFetch;
 globalThis.fetch=()=>new Promise(resolve=>resolveFetch=()=>resolve({ok:true,arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)}));
-Updater.prototype.find=async()=>({id:{model:'FM-1',text:'FM-1_014'},link:{close(){}}});
+let finishIdentity;let firstIdentity=true;
+Updater.prototype.find=async()=>{if(firstIdentity){firstIdentity=false;await new Promise(resolve=>finishIdentity=resolve);}return {id:{model:'FM-1',text:'FM-1_014'},link:{close(){}}};};
 Updater.prototype.install=async(image,product,step,options)=>{writes++;assert.equal(image.length>0,true);assert.deepEqual(options,{wipeUserData:false});step('write',1,{sentBytes:512,totalBytes:bytes.length});await new Promise(resolve=>finish=()=>{step('done',product);resolve();});};
 await import('./unholy-installer.js?single-offering-test');
 assert.equal(midiCalls,0);assert.equal(writes,0);
@@ -41,7 +42,10 @@ elements.get('cancel').listeners.click();resolveFetch();
 await new Promise(resolve=>setTimeout(resolve,40));
 assert.equal(elements.get('phase').textContent,'Session cancelled');
 assert.equal(midiCalls,0);assert.equal(writes,0);assert.equal(elements.get('install').disabled,true);
-await elements.get('connect').listeners.click();
+const connecting=elements.get('connect').listeners.click();
+await new Promise(resolve=>setTimeout(resolve,0));assert.equal(elements.get('connect').disabled,true);assert.equal(elements.get('install').disabled,true);
+await elements.get('connect').listeners.click();assert.equal(midiCalls,1);finishIdentity();await connecting;
+assert.equal(elements.get('connect').hidden,true);
 assert.equal(midiCalls,1);assert.equal(writes,0);assert.equal(elements.get('install').disabled,false,elements.get('package-status').textContent+' / '+elements.get('status').textContent);
 assert.equal(elements.get('install').textContent,'Install Apocryphal');
 // Backup remains optional even when an attempted backup fails.
