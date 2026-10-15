@@ -20,7 +20,7 @@ await test('Network failure gives a clear blocked status',async()=>{await assert
 await test('Fetch uses sole package and bypasses stale cache',async()=>{await fetchBundledPackage(expected,async(url,options)=>{assert.equal(url,expected.filename);assert.equal(options.cache,'no-store');return {ok:true,arrayBuffer:async()=>bytes.buffer};});});
 await test('Verified bundled bytes cannot unlock the experimental release',async()=>{
  const verified=await verifyBundledPackage(bytes,expected);const state=new InstallerState(release);
- state.connect({model:'FM-1',text:'FM-1_014'});state.backup=state.consent=true;
+ state.connect({model:'FM-1',text:'FM-1_014'});
  assert.throws(()=>state.load(verified));assert.equal(state.ready,false);assert.throws(()=>state.start());
  assert.equal(release.available,false);assert.equal(release.targetValidated,false);assert.equal(release.sha256,null);
 });

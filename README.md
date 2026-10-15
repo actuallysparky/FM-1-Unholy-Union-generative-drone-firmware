@@ -4,7 +4,7 @@
 
 UnholyUnion is my generative drone firmware for the M-VAVE FM-1. **Immaculate Permutation** rolls an ambient arrangement in a shared key, with a pad, sequence and chord arpeggio beneath a fourth voice for your hands. Keep a sermon you like, evolve it while playing, or reveal another.
 
-[Enter the Ritual Room — installer and guides](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) · [Download compiled firmware — 0.2.3 experimental](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/download/v0.2.3/unholyunion-permutation-0.2.3.fwsc) · [Illustrated quick start (PDF)](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/UnholyUnion-Quick-Start-0.2.3.pdf) · [Release and guides](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/tag/v0.2.3)
+[Enter the Ritual Room — installer and guides](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) · [Download compiled firmware — 0.2.3](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/download/v0.2.3/unholyunion-permutation-0.2.3.fwsc) · [Illustrated quick start (PDF)](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/UnholyUnion-Quick-Start-0.2.3.pdf) · [Release and guides](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/tag/v0.2.3)
 
 ## What it does
 
@@ -20,11 +20,11 @@ On ordinary performance pages, OCT+/OCT- transpose the selected track's keyboard
 
 ## Receive the offering
 
-Open the [Ritual Room](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) in desktop Chrome or Edge, connect one FM-1 and choose **The Apocrypha**. Gather your scriptures, acknowledge the update risks, then install. The page uses USB MIDI/SysEx over HTTPS.
+Open the [Ritual Room](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) in desktop Chrome or Edge, connect one FM-1, optionally **Gather the scriptures**, then press **Install Apocryphal**. The page uses USB MIDI/SysEx over HTTPS.
 
-**Cleanse all user data** starts unchecked. Leave it unchecked to preserve saved projects, presets, samples and settings. Checking it permanently erases them and restores a fresh beginning. The instrument's ordinary Return to Evening Vow reset preserves saved projects and presets.
+Installation preserves saved projects, presets, samples and settings. The instrument's Return to Evening Vow reset restores the current session while keeping saved projects and presets.
 
-This release is **0.2.3 experimental**, identity FM-1_80023. I've confirmed sermon saving on my FM-1 without audible glitches. Back up your work before installing; saves from this fork cannot be read by older Felucca or Jangada firmware. The Canon awaits separate approval.
+This offering is **0.2.3**, identity FM-1_80023. I've confirmed sermon saving on my FM-1 without audible glitches. Back up your work before installing; saves from this fork cannot be read by older Felucca or Jangada firmware.
 
 The release includes the firmware, corresponding source and SDK data, the Book of Sacred Sounds and checksums. Keep USB and power connected throughout installation.
 

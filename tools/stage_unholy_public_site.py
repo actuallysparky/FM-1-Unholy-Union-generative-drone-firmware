@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = ('unholy-installer.html', 'unholy-installer.css', 'unholy-installer.js',
-         'unholy-controller.js', 'unholy-bundled-package.js', 'unholy-release.js', 'unholy-channels.js', 'unholy-catalog.js',
+         'unholy-controller.js', 'unholy-offering.js', 'unholy-bundled-package.js', 'unholy-release.js', 'unholy-channels.js', 'unholy-catalog.js',
          'fm1ota.js', 'fm1pkg.js', 'fm1backup.js', 'holy-rnd.js', 'holy-rnd-guide.html',
          'unholy-inline-backup.js', 'unholy-holyrnd-revelation.svg', 'unholy-sigil.svg',
          'unholy-drone-preview.png', 'unholy-quick-start.html', 'editor.html',

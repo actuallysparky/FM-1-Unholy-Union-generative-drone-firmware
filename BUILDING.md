@@ -41,4 +41,6 @@ Copy the released `.fwsc` file into `web/` with its published filename before te
 python3 -m http.server 8768 --bind 127.0.0.1 --directory web
 ```
 
-Open `http://127.0.0.1:8768/unholy-installer.html?demo=1` for a simulation with no MIDI access. Opening the ordinary page also does not request permissions or start installation. A real update requires the compatible device, matching package, backup acknowledgement, risk consent and explicit Install click. Cancel is available before update entry; keep power stable once writing starts.
+Open `http://127.0.0.1:8768/unholy-installer.html?demo=1` for a simulation with no MIDI access. Opening the ordinary page also does not request permissions or start installation. A real update requires the compatible device, matching package and explicit Install click. Backup is optional; the public installer preserves user data. Cancel is available before update entry; keep power stable once writing starts.
+
+The public installer pins its sole Apocryphal offering in `web/unholy-offering.js`, independently of the local experimental catalog. Updating local builds does not promote them to the public installer; review and approve the public pin explicitly.
