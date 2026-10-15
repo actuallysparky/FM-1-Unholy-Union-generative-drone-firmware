@@ -7,7 +7,6 @@
 .reading-room>b{display:block;margin-bottom:10px}
 .reading-room>p+p{margin-top:12px}
 
-.release-channels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.channel-card{text-align:left;padding:16px;min-width:0;background:var(--panel)}.channel-card strong,.channel-card span,.channel-card small{display:block}.channel-card strong{font:22px Georgia,serif;color:var(--ember)}.channel-card span{margin:8px 0;font-size:12px}.channel-card small{font-size:11px;color:var(--muted)}.channel-card[aria-pressed=true]{border-color:var(--ember);box-shadow:inset 0 0 0 1px var(--ember)}@media(max-width:620px){.release-channels{grid-template-columns:1fr}}
 
 /* The gold cross stays within the illustrated screen. */
 .instrument .lcd-frame:has(img[src*="holyrnd"]){padding:0;border:0;background:transparent;box-shadow:none}
@@ -28,5 +27,3 @@
 
 .saints{margin:28px 0;padding:28px;border:1px solid var(--line);border-top:2px solid #f7ca50;background:var(--panel)}
 .saints h2{margin:8px 0 24px;font:30px Georgia,serif}.saints-choir{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.saints h3{color:#f7ca50;margin:0 0 10px;font:22px Georgia,serif}.saints p{font-size:13px;color:var(--muted)}.saints>.detail{margin:24px 0 0;font-size:11px}@media(max-width:850px){.saints-choir{grid-template-columns:1fr;gap:18px}}
-
-.wipe-choice{font-size:.85rem;color:var(--muted,#b7b7aa);margin-top:1rem}.wipe-note{font-size:.78rem;margin-top:.25rem}
