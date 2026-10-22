@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import {offering} from './unholy-offering.js?v=apocryphal-1';
-import {InstallerState} from './unholy-controller.js?v=apocryphal-1';
+import {offering} from './unholy-offering.js?v=stock-v15-1';
+import {InstallerState} from './unholy-controller.js?v=stock-v15-1';
 import {fetchBundledPackage} from './unholy-bundled-package.js?v=first-test-1';
-import {Updater,transferLog} from './fm1ota.js?v=preflight-2';
+import {Updater,transferLog} from './fm1ota.js?v=coverage-1';
 const $=id=>document.getElementById(id);
 const demo=new URLSearchParams(location.search).get('demo')==='1';
 const experimental=!offering.release.targetValidated;
@@ -10,18 +10,23 @@ let release=demo?{...offering.release,available:true,targetValidated:true,sha256
 let state=new InstallerState(release,{simulation:demo,experimental:!demo&&experimental});
 let updater=null,access=null,payload=null,bundled=null,loading=false,loadGeneration=0,backingUp=false,connecting=false;
 const matchingInputs=access=>[...access.inputs.values()].filter(p=>p.state!=='disconnected'&&/fm-1|blessed|felucca|unholy|ota|composite|sinco|usb-midi/i.test(p.name||''));
-const label={idle:'Awaiting instrument',connected:'Instrument identified',incompatible:'Incompatible device',validated:'Package checked',starting:'Entering update mode',verify:'Loader preparation',loader:'Waiting for update loader',write:'Writing firmware',wipe:'Cleansing user data',reboot:'Waiting for identity',done:demo?'SIMULATED completion':'Identity verified',error:'Update error',disconnected:'Connection lost',cancelled:'Session cancelled'};
+const stockStartingIdentity=()=>state.device?.model==='FM-1'&&['FM-1_014','FM-1_015'].includes(state.device.text);
+const stockBackupNotice='This page cannot export a complete backup from stock firmware. Keep your original voice-bank files before switching.';
+const label={idle:'Awaiting instrument',connected:'Instrument identified',incompatible:'Firmware not supported',validated:'Package checked',starting:'Entering update mode',verify:'Loader preparation',loader:'Waiting for update loader',write:'Writing firmware',wipe:'Cleansing user data',reboot:'Waiting for identity',done:demo?'SIMULATED completion':'Identity verified',error:'Update error',disconnected:'Connection lost',cancelled:'Session cancelled'};
 function log(s){const box=$('log');box.textContent=`${new Date().toLocaleTimeString()}  ${s}\n`+box.textContent;box.scrollTop=0;}
 function render(){
  $('phase').textContent=label[state.phase]||state.phase;
  $('device').textContent=state.device?`${demo?'SIMULATED ':''}${state.device.text}`:'No device connected.';
  $('install').disabled=connecting||backingUp||!state.ready;$('install').textContent=demo?'Simulate install':'Install Apocryphal';
  $('connect').disabled=connecting||state.busy||backingUp;$('connect').hidden=!!state.device;$('cancel').disabled=state.busy||backingUp;$('cancel').hidden=!state.device;
- $('download-backup').disabled=demo||connecting||state.busy||backingUp||!state.device||!access;
+ $('download-backup').disabled=demo||connecting||state.busy||backingUp||!state.compatible||!access||stockStartingIdentity();
+ if(stockStartingIdentity())$('backup-status').textContent=stockBackupNotice;
+ else if($('backup-status').textContent===stockBackupNotice)$('backup-status').textContent='Optional. Connect your FM-1 to download a backup.';
+ $('install-notes').textContent=stockStartingIdentity()?'Stock presets and sequences are not converted into UnholyUnion projects. Keep USB and power connected throughout the rite.':'Your saved UnholyUnion music stays with you. Keep USB and power connected throughout the rite.';
  $('retry-package').disabled=state.busy||loading;
  $('progress').hidden=!state.busy;
- $('status').textContent=state.error|| (state.phase==='done'?(demo?'Simulation completed. No device was contacted.':`Device returned and reports ${release.product}. Press PLAY to pray.`):state.busy?'Transfer active. Keep USB and power stable. Transfer counts include rereads; the total is the package size, not a percentage of flash written.':demo?'Simulation room: all events below are mocks.':'No update has been initiated.');
- if(!demo&&!state.busy&&state.device&&!state.compatible)$('status').textContent='This offering does not support the instrument’s current identity. Keep your FM-1 connected and check the recovery notes.';
+ $('status').textContent=state.error|| (state.phase==='done'?(demo?'Simulation completed. No device was contacted.':`Device returned and reports ${release.product}. Press PLAY to pray.`):state.busy?'Transfer active. Keep USB and power stable. Supplied data counts each package byte once; transferred data includes rereads. These counts do not measure flash-write progress.':demo?'Simulation room: all events below are mocks.':'No update has been initiated.');
+ if(!demo&&!state.busy&&state.device&&!state.compatible)$('status').textContent=`Detected ${state.device.text}. This offering has no approved installation path from that identity. No update has been started.`;
 }
 $('connect').addEventListener('click',async()=>{
  if(connecting||backingUp||state.busy)return;connecting=true;render();
@@ -39,7 +44,7 @@ $('connect').addEventListener('click',async()=>{
 });
 
 $('download-backup').addEventListener('click',async()=>{
- if(backingUp||state.busy||demo||!access||!state.device)return;
+ if(backingUp||state.busy||demo||!access||!state.compatible||stockStartingIdentity())return;
  backingUp=true;render();$('backup-status').textContent='Gathering your scriptures. Keep playback stopped and your FM-1 connected…';
  try{
   const {gatherScriptures,downloadScriptures}=await import('./unholy-inline-backup.js');
@@ -64,7 +69,7 @@ async function loadBundled(){
   const verified=await fetchBundledPackage(expected);
   if(generation!==loadGeneration)return;
   bundled=verified;authorizeBundled();
-  $('package-status').textContent=`${offering.title} ${expected.version} is ready. Your saved scriptures stay with you.`;
+  $('package-status').textContent=`${offering.title} ${expected.version} is ready.`;
   log(`Offering ${expected.build}: integrity verified locally. No device write.`);
  }catch(e){
   if(generation!==loadGeneration)return;

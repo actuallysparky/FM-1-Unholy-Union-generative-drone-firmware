@@ -22,7 +22,9 @@ On ordinary performance pages, OCT+/OCT- transpose the selected track's keyboard
 
 Open the [Ritual Room](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) in desktop Chrome or Edge, connect one FM-1, optionally **Gather the scriptures**, then press **Install Apocryphal**. The page uses USB MIDI/SysEx over HTTPS.
 
-Installation preserves saved projects, presets, samples and settings. The instrument's Return to Evening Vow reset restores the current session while keeping saved projects and presets.
+The installer accepts stock V14 (`FM-1_014`) and V15 (`FM-1_015`). V15-to-UnholyUnion 0.2.3 installation has been confirmed on one instrument. Stock presets and sequences are not converted; complete backups through this installer are available for UnholyUnion, not stock firmware.
+
+When upgrading UnholyUnion, installation preserves saved projects, presets, samples and settings. The instrument's Return to Evening Vow reset restores the current session while keeping saved projects and presets.
 
 This offering is **0.2.3**, identity FM-1_80023. I've confirmed sermon saving on my FM-1 without audible glitches. Back up your work before installing; saves from this fork cannot be read by older Felucca or Jangada firmware.
 
