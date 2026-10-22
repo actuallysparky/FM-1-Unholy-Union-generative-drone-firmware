@@ -119,7 +119,10 @@ async function handshake(link, tries = 3) {
 }
 
 export function transferLog(phase,detail,progress){
- if(progress?.sentBytes!==undefined)return `${phase} / ${Math.round(progress.sentBytes/1024)} KiB sent / ${Math.round(progress.totalBytes/1024)} KiB package${progress.wiping?' · erasing user data':''}`;
+ if(progress?.sentBytes!==undefined){
+  const coverage=progress.coveredBytes!==undefined?`${Math.round(progress.coveredBytes/1024)} of ${Math.round(progress.totalBytes/1024)} KiB supplied · `:'';
+  return `${phase} / ${coverage}${Math.round(progress.sentBytes/1024)} KiB transferred (includes rereads)${progress.wiping?' · erasing user data':''}`;
+ }
  return `${phase}${detail!==undefined?' / '+detail:''}`;
 }
 
@@ -160,7 +163,8 @@ export class Updater {
   // serve read requests until the device asks for one of the finish addresses; stops early
   // when the port disappears (lost: true) instead of waiting out idleMs
   async serve(link, image, finishAddr, idleMs, onProgress, options = {}) {
-    let served = 0, sentBytes = 0, last = Date.now();
+    let served = 0, sentBytes = 0, coveredBytes = 0, last = Date.now();
+    const supplied = new Uint8Array(image.length);
     for (;;) {
       const pkt = await link.read(1000);
       if (!pkt) {
@@ -176,7 +180,7 @@ export class Updater {
         const answer=[...new TextEncoder().encode("success"),0];
         if(r.len===16) {
           answer.push(...(options.wipeUserData?[...new TextEncoder().encode("WIPEALL"),0]:new Array(8).fill(0)));
-          if(options.wipeUserData && onProgress) onProgress(served,r.addr,{sentBytes,totalBytes:image.length,wiping:true});
+          if(options.wipeUserData && onProgress) onProgress(served,r.addr,{sentBytes,coveredBytes,totalBytes:image.length,wiping:true});
         }
         if(!link.send(response(r.addr,answer)))return {served,finished:false,lost:true};
         if (r.addr === finishAddr && r.len===8) return { served, finished: true };
@@ -188,7 +192,10 @@ export class Updater {
         return { served, finished: false, lost: true };
       }
       served++;sentBytes+=r.len;
-      if (onProgress) onProgress(served, r.addr, {sentBytes,totalBytes:image.length});
+      // The loader verifies and rereads overlapping/out-of-order ranges. Count
+      // each successfully supplied image byte once, independently of traffic.
+      for(let i=r.addr;i<r.addr+r.len;i++)if(!supplied[i]){supplied[i]=1;coveredBytes++;}
+      if (onProgress) onProgress(served, r.addr, {sentBytes,coveredBytes,totalBytes:image.length});
     }
   }
 
