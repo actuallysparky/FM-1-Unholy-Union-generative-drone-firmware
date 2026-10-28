@@ -3468,7 +3468,7 @@ function renderBackup() {
   $("backup-import").disabled = !(caps & 2);
   $("backup-help").textContent = t(caps & 1 ? "backupHelp" : "backupOld");
 }
-const backupModule = () => import("./fm1backup.js?v=v15-e5f2813f7ce5");
+const backupModule = () => import("./fm1backup.js?v=navigation024");
 const backupProgress = (done, total) => sayK("backupWorking", `${Math.round(done / Math.max(1, total) * 100)}%`);
 $("backup-export").addEventListener("click", () => op(async () => {
   const d = dev;
@@ -5175,7 +5175,7 @@ async function holyAction(undo=false) {
   const d=dev, releaseBusy=beginBusy();
   for(const id of ["holy-reveal","holy-undo"])$(id).disabled=true;
   try {
-    const {encodeRite,decodeRite,HOLY_ERRORS}=await import("./holy-rnd.js?v=v15-e5f2813f7ce5");
+    const {encodeRite,decodeRite,HOLY_ERRORS}=await import("./holy-rnd.js?v=navigation024");
     let args;
     if(undo)args=[0];
     else args=encodeRite({key:+$("holy-key").value,scale:+$("holy-scale").value,rite:+$("holy-rite").value,stir:+$("holy-stir").value,tempo:$("holy-tempo").value?+$("holy-tempo").value:0,seed:$("holy-seed").value?+$("holy-seed").value:null});

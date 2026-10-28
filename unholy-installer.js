@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
-import {offering} from './unholy-offering.js?v=v15-e5f2813f7ce5';
-import {InstallerState} from './unholy-controller.js?v=v15-e5f2813f7ce5';
-import {fetchBundledPackage} from './unholy-bundled-package.js?v=v15-e5f2813f7ce5';
-import {Updater,transferLog} from './fm1ota.js?v=v15-e5f2813f7ce5';
+import {offering} from './unholy-offering.js?v=navigation024';
+import {InstallerState} from './unholy-controller.js?v=navigation024';
+import {fetchBundledPackage} from './unholy-bundled-package.js?v=navigation024';
+import {Updater,transferLog} from './fm1ota.js?v=navigation024';
 const $=id=>document.getElementById(id);
 const demo=new URLSearchParams(location.search).get('demo')==='1';
 const experimental=!offering.release.targetValidated;
@@ -47,7 +47,7 @@ $('download-backup').addEventListener('click',async()=>{
  if(backingUp||state.busy||demo||!access||!state.compatible||stockStartingIdentity())return;
  backingUp=true;render();$('backup-status').textContent='Gathering your scriptures. Keep playback stopped and your FM-1 connected…';
  try{
-  const {gatherScriptures,downloadScriptures}=await import('./unholy-inline-backup.js');
+  const {gatherScriptures,downloadScriptures}=await import('./unholy-inline-backup.js?v=navigation024');
   await gatherScriptures(access,state.device.text,downloadScriptures,(done,total)=>{$('backup-status').textContent=`Gathering the scriptures · ${Math.round(done/total*100)}%`;});
   $('backup-status').textContent='Your scriptures have been gathered; the backup download has begun. Keep the file somewhere safe.';log('Complete backup validated; download initiated.');
  }catch(e){$('backup-status').textContent='The scriptures could not be gathered: '+e.message;log('Backup failed: '+e.message);}
