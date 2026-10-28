@@ -4,7 +4,7 @@
 
 UnholyUnion is my generative drone firmware for the M-VAVE FM-1. **Immaculate Permutation** rolls an ambient arrangement in a shared key, with a pad, sequence and chord arpeggio beneath a fourth voice for your hands. Keep a sermon you like, evolve it while playing, or reveal another.
 
-[Enter the Ritual Room — installer and guides](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) · [Download compiled firmware — 0.2.3](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/download/v0.2.3/unholyunion-permutation-0.2.3.fwsc) · [Illustrated quick start (PDF)](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/UnholyUnion-Quick-Start-0.2.3.pdf) · [Release and guides](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/tag/v0.2.3)
+[Enter the Ritual Room — installer and guides](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/) · [Download compiled firmware — 0.2.4](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/unholyunion-permutation-0.2.4.fwsc) · [Illustrated quick start (PDF)](https://actuallysparky.github.io/FM-1-Unholy-Union-generative-drone-firmware/UnholyUnion-Quick-Start-0.2.3.pdf) · [Previous release and guides](https://github.com/actuallysparky/FM-1-Unholy-Union-generative-drone-firmware/releases/tag/v0.2.3)
 
 ## What it does
 
@@ -16,7 +16,7 @@ UnholyUnion is my generative drone firmware for the M-VAVE FM-1. **Immaculate Pe
 - The **Choir Loft** editor and **Altar of Four Winds** macro desk, backups and project exports.
 - **GILT SIN**: gold, silver, blood crimson and black. Good taste has left the chapel.
 
-On ordinary performance pages, OCT+/OCT- transpose the selected track's keyboard, arp and sequence. Immaculate Permutation keeps OCT+ for Reveal.
+On ordinary performance pages, OCT+/OCT- transpose the selected track's keyboard, arp and sequence. Immaculate Permutation keeps OCT+ for Reveal. **Tap OCT− for the full instrument editor** without stopping the music; **hold OCT− to undo** the last rite.
 
 ## Receive the offering
 
@@ -26,9 +26,9 @@ The installer accepts stock V14 (`FM-1_014`) and V15 (`FM-1_015`). V15-to-Unholy
 
 When upgrading UnholyUnion, installation preserves saved projects, presets, samples and settings. The instrument's Return to Evening Vow reset restores the current session while keeping saved projects and presets.
 
-This offering is **0.2.3**, identity FM-1_80023. I've confirmed sermon saving on my FM-1 without audible glitches. Back up your work before installing; saves from this fork cannot be read by older Felucca or Jangada firmware.
+This Experimental offering is **0.2.4**, identity FM-1_80024. The boot greeting and launch screen now explicitly show how to reach the full instrument editor: tap OCT−. Hold OCT− still undoes the last rite. The navigation change passes native and reproducible target-build checks; an instrument trial remains pending. I've confirmed sermon saving on my FM-1 without audible glitches. Back up your work before installing; saves from this fork cannot be read by older Felucca or Jangada firmware.
 
-The release includes the firmware, corresponding source and SDK data, the Book of Sacred Sounds and checksums. Keep USB and power connected throughout installation.
+The Ritual Room includes the current firmware and corresponding source/SDK data. The linked 0.2.3 guides still cover the controls; 0.2.4 makes the editor exit explicit. Keep USB and power connected throughout installation.
 
 ## Praise the saints
 

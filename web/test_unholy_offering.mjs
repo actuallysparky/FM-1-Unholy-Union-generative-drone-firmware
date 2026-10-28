@@ -8,13 +8,13 @@ const html=await readFile(new URL('unholy-installer.html',import.meta.url),'utf8
 assert.doesNotMatch(html,/type=["']checkbox|Choose your testament|channel-stable|channel-experimental/);
 assert.equal((html.match(/class="number"/g)||[]).length,3);
 assert.match(html,/Optional\. Connect your FM-1/);
-assert.equal(offering.package.build,'permutation-0.2.3');
-assert.equal(offering.package.product,'FM-1_80023');
+assert.equal(offering.package.build,'permutation-0.2.4');
+assert.equal(offering.package.product,'FM-1_80024');
 const pkg={product:offering.package.product,sha256:offering.package.sha256,bytes:offering.package.bytes};
-for(const text of ['FM-1_014','FM-1_015','FM-1_80010','FM-1_80022','FM-1_80023']){
+for(const text of ['FM-1_014','FM-1_015','FM-1_80010','FM-1_80022','FM-1_80023','FM-1_80024']){
  const s=new InstallerState(offering.release,{experimental:!offering.release.targetValidated});s.connect({model:'FM-1',text});s.load(pkg);assert.equal(s.ready,true);assert.equal(s.busy,false);assert.equal(s.wipeUserData,false);
 }
-for(const id of [{model:'other',text:'FM-1_014'},{model:'FM-1',text:'FM-1_016'},{model:'FM-1',text:'FM-1_0150'},{model:'other',text:'FM-1_015'},{model:'FM-1',text:'FM-1_80024'},{model:'ota-FM-1',text:'ota-FM-1_999'}]){
+for(const id of [{model:'other',text:'FM-1_014'},{model:'FM-1',text:'FM-1_016'},{model:'FM-1',text:'FM-1_0150'},{model:'other',text:'FM-1_015'},{model:'FM-1',text:'FM-1_80025'},{model:'ota-FM-1',text:'ota-FM-1_999'}]){
  const s=new InstallerState(offering.release,{experimental:!offering.release.targetValidated});s.connect(id);assert.equal(s.compatible,false);assert.equal(s.ready,false);assert.throws(()=>s.start());
 }
 // V15 approval never relaxes package identity, digest or size verification.

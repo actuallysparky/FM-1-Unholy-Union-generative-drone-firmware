@@ -1505,7 +1505,7 @@ static void holy_welcome(uint32_t shift) {
         cv_rect(94,52-(int)shift-(int)y,52,14,0xFEA0);
         holy_welcome_text(119-(int)shift-(int)y,&AF_L,"PRESS PLAY",T_TEXT);
         holy_welcome_text(151-(int)shift-(int)y,&AF_L,"TO PRAY",0xFEA0);
-        holy_welcome_text(207-(int)shift-(int)y,&AF_S,"YOUR SERMON AWAITS",T_MID);
+        holy_welcome_text(207-(int)shift-(int)y,&AF_S,"TAP OCT- FOR FULL EDITOR",T_MID);
         cv_blit(0,y);
     }
     cv_scroll=0;
@@ -1516,7 +1516,7 @@ static void holy_welcome_fade(uint32_t amount) {
     cv_oy=0;cv_begin(52,66,T_BG);cv_rect(19,0,14,66,gold);cv_rect(0,18,52,14,gold);cv_blit(94,34);
     draw_text_box(0,119,240,&AF_L,"PRESS PLAY",silver,1);
     draw_text_box(0,151,240,&AF_L,"TO PRAY",gold,1);
-    draw_text_box(0,207,240,&AF_S,"YOUR SERMON AWAITS",ux_mix(T_MID,T_BG,amount),1);
+    draw_text_box(0,207,240,&AF_S,"TAP OCT- FOR FULL EDITOR",ux_mix(T_MID,T_BG,amount),1);
 }
 static void ui_draw_page(uint32_t counting)
 {
@@ -1536,14 +1536,16 @@ static void ui_draw_page(uint32_t counting)
             if(ui.msg_t && !--ui.msg_t){ui.force=1;return;}
             if(!holy.pulse || (pulse && ((ui_prefs & PREF_ANIM_OFF) || holy.pulse_frame==pf)))return;
             holy.pulse_frame=pf;holy_cross(pulse);
-            if(!pulse){holy.pulse=0;draw_text_box(0,194,240,&AF_S,ui.msg_t?ui.msg:"OCT+ REVEAL / OCT- BACK",0xFEA0,1);}
+            if(!pulse){holy.pulse=0;draw_text_box(0,194,240,&AF_S,ui.msg_t?ui.msg:"OCT+ REVEAL",0xFEA0,1);}
             return;
         }
         holy.pulse_frame=pf;
         if (!pulse) holy.pulse=0;
         lcd_fill(0,0,240,240,T_BG);
-        draw_text_box(0,5,240,&AF_L,"IMMACULATE",T_TEXT,1);
-        draw_text_box(0,38,240,&AF_L,"PERMUTATION",0xFEA0,1);
+        draw_text_box(0,0,240,&AF_L,"IMMACULATE",T_TEXT,1);
+        draw_text_box(0,30,240,&AF_L,"PERMUTATION",0xFEA0,1);
+        /* Navigation stays visible while status, prayers and save feedback change. */
+        draw_text_box(0,65,240,&AF_S,"TAP OCT-: FULL EDITOR",0xFEA0,1);
         draw_text_box(0,80,92,&AF_S,"KEY",T_MID,1);
         draw_text_box(0,94,92,&AF_M,key[holy.key],T_TEXT,1);
         draw_text_box(148,80,92,&AF_S,"SCALE",T_MID,1);
@@ -1568,13 +1570,13 @@ static void ui_draw_page(uint32_t counting)
             for(i=0;i<8;i++)b[n++]=hex[(holy.seed>>(28-i*4))&15];b[n]=0;
             draw_text_box(0,179,240,&AF_S,b,T_MID,1);
         }
-        draw_text_box(0,194,240,&AF_S,(holy.status || ui.msg_t)?ui.msg:pulse?HOLY_PRAYERS[holy.prayer]:"OCT+ REVEAL / OCT- BACK",0xFEA0,1);
+        draw_text_box(0,194,240,&AF_S,(holy.status || ui.msg_t)?ui.msg:pulse?HOLY_PRAYERS[holy.prayer]:"OCT+ REVEAL",0xFEA0,1);
         draw_text_box(0,210,240,&AF_S,"ENV: EVOLVE / LFO: BLESS (+OCT+)",T_MID,1);
         if(holy.save_state) {
             char saved[]="PROJECT A: SERMON A";saved[8]=saved[18]=(char)('A'+holy.save_slot);
             if(holy.save_state==3u){str_cpy(saved,"FLASH ERROR ",sizeof saved);fmt_int(saved+12,holy.save_error);}
             draw_text_box(0,225,240,&AF_S,saved,T_MID,1);
-        } else draw_text_box(0,225,240,&AF_S,"HOLD SAVE: KEEP / OCT-: UNDO",T_MID,1);
+        } else draw_text_box(0,225,240,&AF_S,"HOLD SAVE: KEEP / HOLD OCT-: UNDO",T_MID,1);
         if(ui.msg_t && !--ui.msg_t)ui.force=1;else ui.force=0;
         return;
     }

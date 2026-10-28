@@ -3,15 +3,22 @@
 #define UI_RENDER_NO_MAIN 1
 #include "ui_render.c"
 static int led_of(const uint8_t *l,uint32_t id){uint32_t q=led_pos[id];return q!=0xFF && ((l[q>>3]>>(q&7u))&1u);}
+static int has_text(const char *text) {
+    for(uint32_t i=0;i<nscr;i++)if(str_eq(scr[i].s,text))return 1;
+    return 0;
+}
 int main(void) {
+    int navigation_ok=1;
     rep=fopen("build/host/permutation-ui-lint.txt","w");if(!rep)return 2;
     for(uint32_t p=0;p<NPALETTES;p++)for(uint32_t scale=0;scale<5;scale++) {
         state();pal(p);holy.screen=1;holy.key=12;holy.scale=scale;holy.rite=2;holy.stir=127;
         holy.has_seed=1;holy.root=11;holy.scale_id=5;holy.seed=0xffffffffu;holy.tempo=110;
         cur_name="permutation";nscr=npend=nrules=ncells=0;ui.force=1;ui_draw();lint();
+        navigation_ok &= has_text("TAP OCT-: FULL EDITOR");
         if(p==0 && scale==4)write_ppm("build/host/permutation-ui","GREY","screen");
         for(uint32_t prayer=0;prayer<16;prayer++) {
             nscr=npend=nrules=ncells=0;holy.prayer=prayer;holy.pulse=1;holy.pulse_ms=fm1_ms;ui.force=1;ui_draw();lint();
+            navigation_ok &= has_text("TAP OCT-: FULL EDITOR");
         }
     }
     /* A shimmer frame writes only the cross canvas; composition paints only a small status line. */
@@ -26,11 +33,14 @@ int main(void) {
         fm1_ms=holy.welcome_ms+age;nscr=npend=nrules=ncells=0;ui.force=!age;blit_px=0;ui_draw();
         if(age>=1800u && age<2600u)paint_ok &= blit_px<240u*120u;
         /* Fading intentionally covers the previous page: lint the prompt at rest. */
-        if(!age){lint();write_ppm("build/host/permutation-welcome","GILT SIN","screen");}
+        if(!age){navigation_ok &= has_text("TAP OCT- FOR FULL EDITOR");lint();write_ppm("build/host/permutation-welcome","GILT SIN","screen");}
     }
     paint_ok &= !holy.welcome;
     /* Wall-clock feedback must outlive the generic 40-frame message countdown. */
     state();holy.screen=1;holy.save_state=1;ui_message("SAVING SESSION");
+    nscr=npend=nrules=ncells=0;ui_draw();lint();
+    navigation_ok &= has_text("TAP OCT-: FULL EDITOR");
+    write_ppm("build/host/permutation-saving","GILT SIN","screen");
     for(uint32_t i=0;i<100;i++){fm1_ms+=16u;ui_draw();}
     paint_ok &= str_eq(ui.msg,"SAVING SESSION") && ui.msg_t && holy.save_state==1;
     holy.save_state=2;holy.save_slot=2;holy.save_until=fm1_ms+3000u;ui.force=1;
@@ -42,14 +52,21 @@ int main(void) {
     FILE *layout_report=rep;rep=fopen("/dev/null","w");
     nscr=npend=nrules=ncells=0;
     state();holy.screen=1;hold(B_HOME);ui.menu_sel=MI_FACTORY_RESET;press(B_OCTUP);
-    int ok=paint_ok && !ui.menu && ui.confirm==CF_FACTORY_RESET && !holy.request;
+    int ok=navigation_ok && paint_ok && !ui.menu && ui.confirm==CF_FACTORY_RESET && !holy.request;
     press(B_OCTDN);ok &= !ui.confirm && !holy.request;
     hold(B_HOME);ui.menu_sel=MI_FACTORY_RESET;press(B_OCTUP);press(B_OCTUP);
     ok &= !ui.confirm && holy.request==3;
     state();holy.screen=1;holy.request=0;btn_down(B_SAVE);frames(800);
     ok &= !holy.request;frames(500);ok &= holy.request==6;btn_up(B_SAVE);frame();
     ok &= holy.screen && holy.request==6;
-    state();holy.screen=1;holy.request=0;press(B_OCTDN);ok &= !holy.screen && !holy.request;
+    /* Exit is navigation only: playing/stopped state, selected track and project survive. */
+    for(uint32_t playing=0;playing<2;playing++) {
+        state();holy.screen=1;holy.request=0;song.playing=playing;song.sel=3;
+        uint32_t before=autosave_sig();transport_req=0;
+        press(B_OCTDN);
+        ok &= !holy.screen && !holy.request && ui.home && song.playing==playing;
+        ok &= song.sel==3 && autosave_sig()==before && !transport_req;
+    }
     state();holy.screen=1;holy.request=0;btn_down(B_OCTDN);frames(800);
     ok &= holy.screen && holy.request==2;btn_up(B_OCTDN);frame();ok &= holy.screen;
     state();holy.screen=1;btn_down(B_ENV);press(B_OCTUP);btn_up(B_ENV);ok &= holy.request==4;
