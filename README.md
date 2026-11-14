@@ -43,3 +43,5 @@ This is an unaffiliated GPL-3.0-only derivative. Upstream copyrights, licenses a
 ## Build and contribute
 
 See [BUILDING.md](BUILDING.md) for the Linux compiler and SDK-data setup, and [CONTRIBUTING.md](CONTRIBUTING.md) for tests and bug reports.
+
+You can also try Unholy Union in the browser, no flashing needed, in the free community [FM-1 Emulator](https://fm1-emulator.atst.tools/).
